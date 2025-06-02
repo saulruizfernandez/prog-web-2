@@ -1,0 +1,7 @@
+- Download Apache Tomcat tutorial: https://phoenixnap.com/kb/install-tomcat-ubuntu
+- Tomcat webapp's path: /opt/tomcat/webapps
+- To compile servlet class we need to execute: javac -cp "/opt/tomcat/lib/servlet-api.jar" myfile.java
+We are using libraries such as HttpServlet that are not included in Java, therefore, we need to specify
+where to find them: "servlet-api.jar"
+- sudo systemctl restart tomcat
+- http://localhost:8080/servlet-web-2/servlet/HelloWorld

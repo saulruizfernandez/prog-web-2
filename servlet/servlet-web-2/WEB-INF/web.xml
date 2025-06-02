@@ -6,12 +6,12 @@
   metadata-complete="true">
 
 <servlet>
-     <servlet-name>HelloWorld</servlet-name>
-     <servlet-class>HelloWorldServlet</servlet-class>
+     <servlet-name>transfer</servlet-name>
+     <servlet-class>DataSyncServlet</servlet-class>
 </servlet>
 <servlet-mapping>
-     <servlet-name>HelloWorld</servlet-name>
-     <url-pattern>/servlet/HelloWorld</url-pattern>
+     <servlet-name>transfer</servlet-name>
+     <url-pattern>/transfer</url-pattern>
 </servlet-mapping>
 
 </web-app>

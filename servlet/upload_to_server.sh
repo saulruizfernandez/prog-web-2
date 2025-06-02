@@ -16,4 +16,4 @@ cp -r "$LOCAL_DEPLOY_DIR"/* "$DEPLOY_DIR"
 echo "Restarting Tomcat..."
 sudo systemctl restart tomcat
 
-echo "Deployment finished. Visit app in http://localhost:8080/servlet-web-2/servlet/HelloWorld"
+echo "Deployment finished. Visit app in http://localhost:8080/servlet-web-2/transfer"

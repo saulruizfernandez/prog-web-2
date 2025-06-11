@@ -23,4 +23,5 @@ urlpatterns = [
     path('hello/', views.hello, name='hello'),
     path('index/', views.index, name='index'),
     path('paramsToJson/', views.paramsToJson, name='paramsToJson'),
+    path('SessionCount/', views.SessionCount, name='SessionCount'),
 ]

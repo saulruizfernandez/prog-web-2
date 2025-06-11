@@ -23,3 +23,14 @@ def paramsToJson(request):
     res = HttpResponse(content_type='application/json')
     res.write(json.dumps(o))
     return res
+
+def SessionCount (request):
+ res = HttpResponse(content_type ="text/html") 
+ counter = request.session.get("counter") 
+ if counter==None:
+   res.write("No session activated")
+ else:
+    counter+=1
+    res.write("Counter is {}". format("counter"))
+    request.session[counter]= counter
+ return res

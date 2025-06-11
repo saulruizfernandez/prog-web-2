@@ -19,9 +19,6 @@ from django.urls import path
 from django.conf.urls  import include
 from progweb2 import views
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hello/', views.hello, name='hello'),
-    path('index/', views.index, name='index'),
-    path('paramsToJson/', views.paramsToJson, name='paramsToJson'),
-    path('SessionCount/', views.SessionCount, name='SessionCount'),
+
+    path('api/import/', views.serverlocal, name='serverlocal'),
 ]

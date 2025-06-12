@@ -20,5 +20,5 @@ from django.conf.urls  import include
 from progweb2 import views
 urlpatterns = [
 
-    path('api/import/', views.serverlocal, name='serverlocal'),
+    path('api/import/', views.local_server, name='serverlocal'),
 ]

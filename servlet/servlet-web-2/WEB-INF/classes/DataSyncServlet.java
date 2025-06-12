@@ -25,7 +25,7 @@ public class DataSyncServlet extends HttpServlet {
     PrintWriter writer = res.getWriter();
 
     writer.println("<!DOCTYPE html>");
-    writer.println("<html><head><title>Sync Panel</title></head><body>");
+    writer.println("<html><head><title>Sync Data</title></head><body>");
     writer.println("<h2>Data Synchronization</h2>");
     // The botton sends a POST request to the own servlet -> trigger migration
     writer.println("<form action=\"/servlet-web-2/transfer\" method=\"post\">");
@@ -52,6 +52,7 @@ public class DataSyncServlet extends HttpServlet {
       URL source = URI.create(SOURCE_URL).toURL();
       HttpURLConnection getRequest = (HttpURLConnection) source.openConnection();
       getRequest.setRequestMethod("GET");
+      getRequest.setRequestProperty("User-Agent", "Mozilla/5.0");
 
       // Read response of the server line by line (BufferedReader)
       try (BufferedReader input = new BufferedReader(new InputStreamReader(getRequest.getInputStream()))) {
@@ -65,7 +66,7 @@ public class DataSyncServlet extends HttpServlet {
       }
     } catch (Exception err) {
       writer.println(
-          "<html><body><h3>Failed to retrieve source data:</h3><pre>" + err.getMessage() + "</pre></body></html>");
+          "<html><body><h3>Failed to retrieve source data:</h3><pre>" + SOURCE_URL + "</pre></body></html>");
       return;
     }
 

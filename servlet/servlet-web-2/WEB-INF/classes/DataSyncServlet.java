@@ -12,7 +12,7 @@ import java.net.*; // For HTTP connections with remote and local servers
 public class DataSyncServlet extends HttpServlet {
 
   // URL of source and target webservices (PHP and Django)
-  private static final String SOURCE_URL = "https://youraltervista.altervista.org/api/data.php";
+  private static final String SOURCE_URL = "http://arsapi.altervista.org/";
   private static final String TARGET_URL = "http://localhost:8000/api/import/";
 
   // Executes when the user opens the webpage from the browser
@@ -49,7 +49,7 @@ public class DataSyncServlet extends HttpServlet {
     try {
       // Establish a connection with the PHP server (source), and set petition as GET,
       // as it won't send anything, only receive
-      URL source = new URL(SOURCE_URL);
+      URL source = URI.create(SOURCE_URL).toURL();
       HttpURLConnection getRequest = (HttpURLConnection) source.openConnection();
       getRequest.setRequestMethod("GET");
 
@@ -72,7 +72,7 @@ public class DataSyncServlet extends HttpServlet {
     try {
       // Creates a connection with the Django server (target)
       // The request is POST, as it will send data to the local server
-      URL target = new URL(TARGET_URL);
+      URL target = URI.create(TARGET_URL).toURL();
       HttpURLConnection postRequest = (HttpURLConnection) target.openConnection();
       postRequest.setRequestMethod("POST");
       postRequest.setDoOutput(true); // Enable to insert data in the body of POST

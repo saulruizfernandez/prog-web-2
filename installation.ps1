@@ -12,9 +12,6 @@ python -m virtualenv venv_web
 # Activate virtual environment
 .\venv_web\Scripts\activate
 
-# Navigate to the project folder
-cd .\prog-web-2\
-
 # Install required Python packages
 pip install -r requirements.txt
 

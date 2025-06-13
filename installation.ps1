@@ -18,12 +18,49 @@ pip install -r requirements.txt
 # Run Python web service in a new terminal window
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd $(Get-Location); .\venv_web\Scripts\activate; python .\myapp\manage.py runserver"
 
-# Copy servlet folder to Tomcat webapps directory
-$tomcatPath = "C:\Program Files\Apache Software Foundation\Tomcat 11.0\webapps"
-Copy-Item -Path ".\servlet\servlet-web-2\" -Destination $tomcatPath -Recurse -Force
+# Try to find Tomcat webapps directory in common locations
+$possibleTomcatPaths = @(
+    "$env:ProgramFiles\Apache Software Foundation\Tomcat 11.0\webapps",
+    "$env:ProgramFiles\Apache Software Foundation\Tomcat 10.0\webapps",
+    "$env:ProgramFiles\Apache Software Foundation\Tomcat 9.0\webapps",
+    "$env:ProgramFiles\Apache Tomcat\webapps",
+    "$env:LOCALAPPDATA\Programs\Apache Software Foundation\Tomcat\webapps"
+)
 
-# Open MongoDB Compass (ensure path is correct or modify if needed)
-Start-Process "C:\Program Files\MongoDB Compass\MongoDBCompass.exe"
+$foundTomcatPath = $null
+foreach ($path in $possibleTomcatPaths) {
+    if (Test-Path $path) {
+        $foundTomcatPath = $path
+        break
+    }
+}
+
+if ($foundTomcatPath) {
+    # Copy servlet folder to detected Tomcat webapps directory
+    Copy-Item -Path ".\servlet\servlet-web-2\" -Destination $foundTomcatPath -Recurse -Force
+    Write-Host "Servlet copied to: $foundTomcatPath"
+} else {
+    Write-Warning "Tomcat webapps folder not found. Please copy the servlet manually."
+}
+
+# Try to find MongoDBCompass.exe in common install paths
+$commonPaths = @(
+    "$env:ProgramFiles\MongoDB Compass\MongoDBCompass.exe",
+    "$env:LOCALAPPDATA\Programs\MongoDB Compass\MongoDBCompass.exe",
+    "$env:ProgramFiles(x86)\MongoDB Compass\MongoDBCompass.exe",
+    "$env:APPDATA\MongoDBCompass.exe"
+)
+
+foreach ($path in $commonPaths) {
+    if (Test-Path $path) {
+        Start-Process $path
+        break
+    }
+}
+
+if (-not ($commonPaths | Where-Object { Test-Path $_ })) {
+    Write-Warning "MongoDB Compass not found in common locations. Please open it manually."
+}
 
 # Wait a few seconds to allow MongoDB Compass to open
 Start-Sleep -Seconds 10

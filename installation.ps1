@@ -43,24 +43,16 @@ if ($foundTomcatPath) {
     Write-Warning "Tomcat webapps folder not found. Please copy the servlet manually."
 }
 
-# Try to find MongoDBCompass.exe in common install paths
-$commonPaths = @(
-    "$env:ProgramFiles\MongoDB Compass\MongoDBCompass.exe",
-    "$env:LOCALAPPDATA\Programs\MongoDB Compass\MongoDBCompass.exe",
-    "$env:ProgramFiles(x86)\MongoDB Compass\MongoDBCompass.exe",
-    "$env:APPDATA\MongoDBCompass.exe"
-)
+# Try to launch MongoDB Compass from Start Menu shortcut
+$shortcutPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\MongoDB Inc\MongoDB Compass.lnk"
 
-foreach ($path in $commonPaths) {
-    if (Test-Path $path) {
-        Start-Process $path
-        break
-    }
+if (Test-Path $shortcutPath) {
+    Start-Process $shortcutPath
+    Write-Host "MongoDB Compass launched from shortcut."
+} else {
+    Write-Warning "MongoDB Compass shortcut not found at expected location. Please open it manually."
 }
 
-if (-not ($commonPaths | Where-Object { Test-Path $_ })) {
-    Write-Warning "MongoDB Compass not found in common locations. Please open it manually."
-}
 
 # Wait a few seconds to allow MongoDB Compass to open
 Start-Sleep -Seconds 10
